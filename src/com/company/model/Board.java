@@ -8,6 +8,7 @@ public abstract class Board {
         board[row][col] = newState;
     }
 
+    //This gets the board state, wow, crazy
     public BoardState getBoardSquare(int row, int col) {
         return board[row][col];
     }
