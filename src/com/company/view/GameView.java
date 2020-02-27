@@ -21,7 +21,7 @@ public class GameView extends JFrame {
         pane.add(a);
         pane.add(b);
         pane.add(c);
-
+        //adskjfa;lskdjfa;
 
     }
 
