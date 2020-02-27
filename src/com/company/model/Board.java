@@ -9,6 +9,7 @@ public abstract class Board {
     }
 
     //This gets the board state, wow, crazy
+    //Even more comments
     public BoardState getBoardSquare(int row, int col) {
         return board[row][col];
     }
