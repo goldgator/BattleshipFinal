@@ -11,7 +11,7 @@ public class GameView extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        JButton a = new JButton();
+        JButton a = new JButton("button");
         JLabel b = new JLabel();
         JLabel c = new JLabel();
 

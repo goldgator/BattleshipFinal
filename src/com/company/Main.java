@@ -9,7 +9,3 @@ public class Main {
 	       GameView view = new GameView();
     }
 }
-
-
-
-
