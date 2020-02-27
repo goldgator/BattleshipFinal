@@ -19,6 +19,7 @@ public abstract class Board {
             for (int j = 0; j < board[0].length; j++) {
                 //Fills every square as empty
                 board[i][j] = BoardState.EMPTY;
+                //blahblahblah
             }
         }
     }
