@@ -27,4 +27,6 @@ public class GameView extends JFrame {
 
     public void makeView() {
     }
+
+
 }

@@ -2,10 +2,10 @@ package com.company.model;
 
 public abstract class Player {
     private String name = "";
-    private UserBoard ownBoard = new UserBoard();
-    private GuessingBoard guessBoard = new GuessingBoard();
+    protected UserBoard ownBoard = new UserBoard();
+    protected GuessingBoard guessBoard = new GuessingBoard();
 
-    Player(String newName) {
+    public Player(String newName) {
         name = newName;
     }
 
@@ -17,5 +17,5 @@ public abstract class Player {
         this.name = name;
     }
 
-    public abstract void chooseGridSpace();
+    public abstract int[] chooseGridSpace();
 }

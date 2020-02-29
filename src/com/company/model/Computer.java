@@ -3,12 +3,16 @@ package com.company.model;
 public class Computer extends Player {
 
 
-    Computer(String newName) {
+    public Computer(String newName) {
         super(newName);
     }
 
-    public void chooseGridSpace() {
+    public int[] chooseGridSpace() {
+        //TODO Create AI
+        int row = 0;
+        int col = 0;
 
+        return new int[]{row,col};
     }
 
 }
