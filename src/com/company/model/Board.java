@@ -9,9 +9,16 @@ public abstract class Board {
 
     public abstract void targetSquare(int row, int col);
 
+    public int getLength() {
+        return board.length;
+    }
 
-    public BoardState getBoardSquare(int row, int col) {
-        return board[row][col].getState();
+    public void setBoardSquare(int row, int col, BoardState newState) {
+        board[row][col].setState(newState);
+    }
+
+    public BoardSquare getBoardSquare(int row, int col) {
+        return board[row][col];
     }
 
     /**
@@ -20,14 +27,8 @@ public abstract class Board {
     public void resetBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (i > 1) {
-                    //Fills every square as empty
-                    board[i][j] = new BoardSquare(i, j);
-                } else {
-                    BoardSquare square = new BoardSquare(i, j);
-                    square.setState(BoardState.SHIP);
-                    board[i][j] = square;
-                }
+                //Fills every square as empty
+                board[i][j] = new BoardSquare(i, j);
             }
         }
     }

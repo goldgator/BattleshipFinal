@@ -1,18 +1,27 @@
 package com.company.model;
 
-public class Computer extends Player {
+import com.company.model.difficulty.Difficulty;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Computer extends Player {
+    private ArrayList<BoardSquare> activeHits = new ArrayList<>();
+    private Difficulty diff;
 
     public Computer(String newName) {
         super(newName);
     }
 
-    public int[] chooseGridSpace() {
-        //TODO Create AI
-        int row = 0;
-        int col = 0;
-
-        return new int[]{row,col};
+    public void setDiff(Difficulty newDiff) {
+        diff = newDiff;
     }
 
+    public int[] chooseGridSpace() {
+        return diff.chooseSquare(guessBoard,activeHits);
+    }
+
+    public void addActiveHit(BoardSquare newActive) {
+        activeHits.add(newActive);
+    }
 }
