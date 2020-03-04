@@ -1,22 +1,21 @@
 package com.company.view;
 
-import com.sun.scenario.effect.impl.prism.PrDrawable;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class GameView{
+public class GameView {
     JFrame initFrame;
-    JFrame setBoardFrame;
+    JFrame playerBoard;
     JFrame playGameFrame;
     JFrame endFrame;
     JMenuBar menuBar;
     JMenu TopLevelMenu;
     JMenuItem menuItem;
     JButton button;
+
     public GameView() {
         initFrame = new JFrame("Battleship");
         initFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -24,6 +23,7 @@ public class GameView{
         makeDifficultyOptions(initFrame.getContentPane());
         initFrame.pack();
         initFrame.setVisible(true);
+//        playerBoard.setVisible(false);
 
     }
 
@@ -59,13 +59,15 @@ public class GameView{
         menuItem.setMnemonic(KeyEvent.VK_E);
         TopLevelMenu.add(menuItem);
     }
+
     public void chooseDifficulty(String text, JButton button) {
-        switch(text) {
+        switch (text) {
             case "easy":
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         //start game in ea
                         System.out.println("starting in easy");
+                        gridSetup();
                     }
                 });
                 break;
@@ -74,6 +76,7 @@ public class GameView{
                     public void actionPerformed(ActionEvent e) {
                         //start game in medium
                         System.out.println("starting in medium");
+                        gridSetup();
                     }
                 });
                 break;
@@ -82,25 +85,22 @@ public class GameView{
                     public void actionPerformed(ActionEvent e) {
                         //start game in hard
                         System.out.println("starting in hard");
+                        gridSetup();
                     }
                 });
                 break;
         }
         initFrame.setVisible(false);
-        //    setBoardFrame.setVisible(true);
+
     }
 
-    public void setSetBoardFrame() {
-        setBoardFrame = new JFrame("Set Up Your Board!");
-        setBoardFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    public void gridSetup() {
+        Grid grid = new Grid();
+        playerBoard = new JFrame("Set Up Your Board!");
+        playerBoard.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        playerBoard.getContentPane().add(grid);
+        playerBoard.pack();
+        playerBoard.setLocationRelativeTo(null);
+        playerBoard.setVisible(true);
     }
-
-    public void drawGrid() {
-        PrDrawable drawable;
-    }
-
-
-
-
-
 }
