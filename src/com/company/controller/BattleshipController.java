@@ -4,8 +4,10 @@ import com.company.model.Computer;
 import com.company.model.Player;
 import com.company.model.User;
 import com.company.model.UserBoard;
+import com.company.model.difficulty.Difficulty;
 import com.company.view.GameView;
 
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,15 +15,20 @@ import java.io.InputStreamReader;
 public class BattleshipController {
     private GameView userUI = new GameView();
     private Player player1;
+    private Difficulty diff;
+    private int[] userGuess;
 
 
-    public void run() {
-        String input  = promptForString("[row,col]");
-        String[] rowColString = input.split(",");
-        int[] rowColInt = {Integer.parseInt(rowColString[0]), Integer.parseInt(rowColString[1])};
-        UserBoard newBoard = new UserBoard();
-        newBoard.targetSquare(rowColInt[0],rowColInt[1]);
-        System.out.println(newBoard);
+    public void run() throws InterruptedException{
+        while (diff == null) {
+            wait(50);
+        }
+
+        startGame();
+    }
+
+    private void startGame() {
+
     }
 
     public String promptForString(String prompt) {

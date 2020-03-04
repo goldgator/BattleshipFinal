@@ -23,7 +23,6 @@ public abstract class Board {
 
     /**
      * Resets the board, putting everything back to Empty
-     * blah blah blah
      */
     public void resetBoard() {
         for (int i = 0; i < board.length; i++) {
