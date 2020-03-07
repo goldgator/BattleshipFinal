@@ -95,12 +95,22 @@ public class GameView {
     }
 
     public void gridSetup() {
-        Grid grid = new Grid();
-        playerBoard = new JFrame("Set Up Your Board!");
-        playerBoard.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        playerBoard.getContentPane().add(grid);
-        playerBoard.pack();
-        playerBoard.setLocationRelativeTo(null);
-        playerBoard.setVisible(true);
+        Grid grid = new Grid(30);
+        Grid grid2 = new Grid(20);
+
+        initFrame.dispose();
+        initFrame = new JFrame("Set Up Your Board!");
+
+        initFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        initFrame.getContentPane().add(grid);
+        initFrame.getContentPane().add(grid2);
+        initFrame.setLayout(new BoxLayout(initFrame.getContentPane(),BoxLayout.Y_AXIS));
+
+        initFrame.pack();
+        initFrame.setLocationRelativeTo(null);
+        initFrame.setVisible(true);
+        for (Component c : initFrame.getContentPane().getComponents()) {
+            System.out.println(c.toString());
+        }
     }
 }

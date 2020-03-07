@@ -7,10 +7,11 @@ public class Grid extends JPanel {
     private int btnSide = 4;
     private int gap = 4;
     private Color black = Color.BLACK;
-    private Dimension btnPreferSize = new Dimension(90,90);
+    private Dimension btnPreferSize;
     private JButton[][] buttons = new JButton[16][16];
 
-    public Grid() {
+    public Grid(int pSize) {
+        btnPreferSize = new Dimension(pSize,pSize);
         setBackground(black);
         setLayout(new GridLayout(btnSide, btnSide, gap, gap));
         setBorder(BorderFactory.createEmptyBorder(gap, gap, gap, gap));
@@ -28,6 +29,8 @@ public class Grid extends JPanel {
                 String coordinate = String.format("(%d, %d)", j, i);
                 buttons[i][j] = new JButton(coordinate);
                 buttons[i][j].setPreferredSize(btnPreferSize);
+                buttons[i][j].setMinimumSize(btnPreferSize);
+                buttons[i][j].setMaximumSize(btnPreferSize);
                 panels[iPanel][jPanel].add(buttons[i][j]);
             }
         }

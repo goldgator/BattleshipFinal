@@ -19,10 +19,8 @@ public class BattleshipController {
     private int[] userGuess;
 
 
-    public void run() throws InterruptedException{
-        while (diff == null) {
-            wait(50);
-        }
+    public void run() {
+
 
         startGame();
     }
