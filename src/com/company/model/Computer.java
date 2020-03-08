@@ -9,8 +9,9 @@ public class Computer extends Player {
     private ArrayList<BoardSquare> activeHits = new ArrayList<>();
     private Difficulty diff;
 
-    public Computer(String newName) {
+    public Computer(String newName, Difficulty newDiff) {
         super(newName);
+        setDiff(newDiff);
     }
 
     public void setDiff(Difficulty newDiff) {

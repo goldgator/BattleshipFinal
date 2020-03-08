@@ -1,5 +1,10 @@
 package com.company.view;
 
+import com.company.controller.BattleshipController;
+import com.company.model.difficulty.Easy;
+import com.company.model.difficulty.Hard;
+import com.company.model.difficulty.Medium;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class GameView {
+    BattleshipController cont;
     JFrame initFrame;
     JFrame playerBoard;
     JFrame playGameFrame;
@@ -26,6 +32,11 @@ public class GameView {
 //        playerBoard.setVisible(false);
 
     }
+
+    public void attachController(BattleshipController newCont) {
+        cont = newCont;
+    }
+
 
     public void makeDifficultyOptions(Container container) {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -67,6 +78,7 @@ public class GameView {
                     public void actionPerformed(ActionEvent e) {
                         //start game in ea
                         System.out.println("starting in easy");
+                        cont.setDiff(new Easy());
                         gridSetup();
                     }
                 });
@@ -76,6 +88,7 @@ public class GameView {
                     public void actionPerformed(ActionEvent e) {
                         //start game in medium
                         System.out.println("starting in medium");
+                        cont.setDiff(new Medium());
                         gridSetup();
                     }
                 });
@@ -85,6 +98,7 @@ public class GameView {
                     public void actionPerformed(ActionEvent e) {
                         //start game in hard
                         System.out.println("starting in hard");
+                        cont.setDiff(new Hard());
                         gridSetup();
                     }
                 });
@@ -95,22 +109,38 @@ public class GameView {
     }
 
     public void gridSetup() {
-        Grid grid = new Grid(30);
-        Grid grid2 = new Grid(20);
+        Grid grid = new Grid(70,this);
+        JTextArea textArea = new JTextArea("Stuff goes here");
+        textArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        textArea.setOpaque(false);
+        Grid grid2 = new Grid(40,this);
 
         initFrame.dispose();
         initFrame = new JFrame("Set Up Your Board!");
 
         initFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        initFrame.getContentPane().add(grid);
-        initFrame.getContentPane().add(grid2);
+        JPanel topGrid = new JPanel();
+        JPanel centerText = new JPanel();
+        JPanel botGrid = new JPanel();;
+        topGrid.add(grid);
+        centerText.add(textArea);
+        botGrid.add(grid2);
+        topGrid.setLayout(new BoxLayout(topGrid,BoxLayout.Y_AXIS));
+        centerText.setLayout(new BoxLayout(centerText,BoxLayout.Y_AXIS));
+        botGrid.setLayout(new BoxLayout(botGrid,BoxLayout.Y_AXIS));
+
+        initFrame.getContentPane().add(topGrid);
+        initFrame.getContentPane().add(centerText);
+        initFrame.getContentPane().add(botGrid);
         initFrame.setLayout(new BoxLayout(initFrame.getContentPane(),BoxLayout.Y_AXIS));
 
         initFrame.pack();
         initFrame.setLocationRelativeTo(null);
         initFrame.setVisible(true);
-        for (Component c : initFrame.getContentPane().getComponents()) {
-            System.out.println(c.toString());
-        }
     }
+
+    public void tellContCoords(int[] coords) {
+        cont.setUserGuess(coords);
+    }
+
 }

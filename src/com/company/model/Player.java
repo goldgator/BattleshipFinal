@@ -20,7 +20,11 @@ public abstract class Player {
 
     public abstract int[] chooseGridSpace();
 
-    public void shotResults(BoardState newState) {
+    public void shotBoard(int[] coords) {
+        ownBoard.targetSquare(coords[0],coords[1]);
+    }
 
+    public void guessShotBoard(int[] coords) {
+        guessBoard.targetSquare(coords[0],coords[1]);
     }
 }

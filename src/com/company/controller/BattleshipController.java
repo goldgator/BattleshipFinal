@@ -15,39 +15,56 @@ import java.io.InputStreamReader;
 public class BattleshipController {
     private GameView userUI = new GameView();
     private Player player1;
+    private Player player2;
+    private boolean isUserTurn = true;
     private Difficulty diff;
     private int[] userGuess;
 
 
+    public void setUserGuess(int[] newGuess) {
+        userGuess = newGuess;
+        if (isUserTurn) {
+            userTurn();
+        }
+    }
+
+    public void setDiff(Difficulty newDiff) {
+        diff = newDiff;
+        System.out.println(newDiff.getClass().getSimpleName());
+        setupPlayers();
+    }
+
+    public BattleshipController() {
+        userUI.attachController(this);
+    }
+
     public void run() {
-
-
-        startGame();
+        //Instantiation here
     }
 
-    private void startGame() {
-
+    public void setupPlayers() {
+        player1 = new User("Hank");
+        player2 = new Computer("Zorp",diff);
     }
 
-    public String promptForString(String prompt) {
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print(prompt);
-        String userString = "";
-        boolean escapeBoolean = false;
-        do {
-            try {
-                //Take input and trim pointless white space
-                userString = input.readLine().trim();
-                if (userString.isEmpty()) {
-                    throw new IllegalArgumentException("Please give a response: ");
-                }
-                return userString;
-            } catch (IOException | IllegalArgumentException exc) {
-                System.out.print(exc.getMessage()); //Empty space to make sure it replaces all characters
-                System.out.flush();
-            }
-        } while (0 == 0); //Will only leave loop via return statement
+    private void userTurn() {
+        isUserTurn = false;
+        System.out.println(userGuess[0] + ", " + userGuess[1]);
+        player1.guessShotBoard(userGuess);
+        player2.shotBoard(userGuess);
+        userGuess = null;
+
+        opponentTurn();
     }
+
+    private void opponentTurn() {
+        int[] opponentGuess = player2.chooseGridSpace();
+        System.out.println(opponentGuess[0] + ", " + opponentGuess[1]);
+        player2.guessShotBoard(opponentGuess);
+        player1.shotBoard(opponentGuess);
+        isUserTurn = true;
+    }
+
 
 
 

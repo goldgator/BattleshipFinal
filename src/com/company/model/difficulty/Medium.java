@@ -7,7 +7,7 @@ import com.company.model.BoardState;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Medium {
+public class Medium implements Difficulty {
 
     public int[] chooseSquare(Board testBoard, ArrayList<BoardSquare> activeHits) {
         int row = 0;
