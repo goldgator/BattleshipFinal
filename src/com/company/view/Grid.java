@@ -27,7 +27,8 @@ public class Grid extends JPanel {
         for (int i = 0; i < panels.length; i++) {
             for (int j = 0; j < panels[i].length; j++) {
                 panels[i][j] = new JPanel(new GridLayout(btnSide, btnSide));
-                panels[i][j].setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+                panels[i][j].setBackground(black);
+                panels[i][j].setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
                 add(panels[i][j]);
             }
         }
@@ -38,8 +39,6 @@ public class Grid extends JPanel {
                 String coordinate = String.format("(%d, %d)", i, j);
                 buttons[i][j] = new JButton(coordinate);
                 buttons[i][j].setPreferredSize(btnPreferSize);
-                buttons[i][j].setMinimumSize(btnPreferSize);
-                buttons[i][j].setMaximumSize(btnPreferSize);
 
                 int finalI = i;
                 int finalJ = j;
