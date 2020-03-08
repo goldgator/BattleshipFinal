@@ -10,6 +10,14 @@ public abstract class Player {
         name = newName;
     }
 
+    public UserBoard getOwnBoard() {
+        return ownBoard;
+    }
+
+    public void attachOpponentBoard(UserBoard newBoard) {
+        guessBoard.attachOpponentBoard(newBoard);
+    }
+
     public String getName() {
         return name;
     }
@@ -20,11 +28,7 @@ public abstract class Player {
 
     public abstract int[] chooseGridSpace();
 
-    public void shotBoard(int[] coords) {
-        ownBoard.targetSquare(coords[0],coords[1]);
-    }
-
-    public void guessShotBoard(int[] coords) {
-        guessBoard.targetSquare(coords[0],coords[1]);
+    public BoardState guessShotBoard(int[] coords) {
+        return guessBoard.targetSquare(coords[0],coords[1]);
     }
 }

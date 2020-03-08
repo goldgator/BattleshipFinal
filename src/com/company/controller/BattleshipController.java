@@ -1,9 +1,6 @@
 package com.company.controller;
 
-import com.company.model.Computer;
-import com.company.model.Player;
-import com.company.model.User;
-import com.company.model.UserBoard;
+import com.company.model.*;
 import com.company.model.difficulty.Difficulty;
 import com.company.view.GameView;
 
@@ -45,25 +42,30 @@ public class BattleshipController {
     public void setupPlayers() {
         player1 = new User("Hank");
         player2 = new Computer("Zorp",diff);
+        player1.attachOpponentBoard(player2.getOwnBoard());
+        player2.attachOpponentBoard(player1.getOwnBoard());
     }
 
     private void userTurn() {
-        isUserTurn = false;
         System.out.println(userGuess[0] + ", " + userGuess[1]);
-        player1.guessShotBoard(userGuess);
-        player2.shotBoard(userGuess);
-        userGuess = null;
+        BoardState result = player1.guessShotBoard(userGuess);
+        userUI.updateSquareIcon(result,userGuess[0],userGuess[1],isUserTurn);
 
+        userGuess = null;
+        isUserTurn = false;
         opponentTurn();
     }
 
     private void opponentTurn() {
         int[] opponentGuess = player2.chooseGridSpace();
         System.out.println(opponentGuess[0] + ", " + opponentGuess[1]);
-        player2.guessShotBoard(opponentGuess);
-        player1.shotBoard(opponentGuess);
+        BoardState result = player2.guessShotBoard(opponentGuess);
+        userUI.updateSquareIcon(result,opponentGuess[0],opponentGuess[1],isUserTurn);
+
+
         isUserTurn = true;
     }
+
 
 
 

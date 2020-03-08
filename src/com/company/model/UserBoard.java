@@ -9,14 +9,16 @@ public class UserBoard extends Board {
         resetBoard();
     }
 
-    public void targetSquare(int row, int col) {
+    public BoardState targetSquare(int row, int col) {
         switch (board[row][col].getState()) {
             case EMPTY:
                 board[row][col].setState(BoardState.MISSED);
-                break;
+                return BoardState.MISSED;
             case SHIP:
                 board[row][col].setState(BoardState.HIT);
-                break;
+                return BoardState.HIT;
+            default:
+                return board[row][col].getState();
         }
     }
 

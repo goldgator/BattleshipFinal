@@ -7,7 +7,7 @@ public abstract class Board {
 
 
 
-    public abstract void targetSquare(int row, int col);
+    public abstract BoardState targetSquare(int row, int col);
 
     public int getLength() {
         return board.length;

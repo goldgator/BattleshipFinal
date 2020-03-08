@@ -2,20 +2,20 @@ package com.company.model;
 
 public class GuessingBoard extends Board {
     BoardSquare lastHitSquare;
+    UserBoard opponentBoard;
 
     public GuessingBoard() {
         resetBoard();
     }
 
-    public void targetSquare(int row, int col) {
-        switch (board[row][col].getState()) {
-            case EMPTY:
-                board[row][col].setState(BoardState.MISSED);
-                break;
-            case SHIP:
-                board[row][col].setState(BoardState.HIT);
-                break;
-        }
+    public void attachOpponentBoard(UserBoard newBoard) {
+        opponentBoard = newBoard;
+    }
+
+    public BoardState targetSquare(int row, int col) {
+        BoardState resultState = opponentBoard.targetSquare(row, col);
+        board[row][col].setState(resultState);
+        return resultState;
     }
 
 

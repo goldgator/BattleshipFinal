@@ -1,6 +1,7 @@
 package com.company.view;
 
 import com.company.controller.BattleshipController;
+import com.company.model.BoardState;
 import com.company.model.difficulty.Easy;
 import com.company.model.difficulty.Hard;
 import com.company.model.difficulty.Medium;
@@ -14,13 +15,15 @@ import java.awt.event.KeyEvent;
 public class GameView {
     BattleshipController cont;
     JFrame initFrame;
-    JFrame playerBoard;
-    JFrame playGameFrame;
-    JFrame endFrame;
     JMenuBar menuBar;
     JMenu TopLevelMenu;
     JMenuItem menuItem;
     JButton button;
+
+    Grid userGrid;
+    Grid guessGrid;
+    JTextArea textArea;
+
 
     public GameView() {
         initFrame = new JFrame("Battleship");
@@ -109,11 +112,11 @@ public class GameView {
     }
 
     public void gridSetup() {
-        Grid grid = new Grid(70,this);
-        JTextArea textArea = new JTextArea("Stuff goes here");
+        guessGrid = new Grid(70,this);
+        textArea = new JTextArea("Stuff goes here");
         textArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         textArea.setOpaque(false);
-        Grid grid2 = new Grid(40,this);
+        userGrid = new Grid(40,this);
 
         initFrame.dispose();
         initFrame = new JFrame("Set Up Your Board!");
@@ -122,9 +125,9 @@ public class GameView {
         JPanel topGrid = new JPanel();
         JPanel centerText = new JPanel();
         JPanel botGrid = new JPanel();;
-        topGrid.add(grid);
+        topGrid.add(guessGrid);
         centerText.add(textArea);
-        botGrid.add(grid2);
+        botGrid.add(userGrid);
         topGrid.setLayout(new BoxLayout(topGrid,BoxLayout.Y_AXIS));
         centerText.setLayout(new BoxLayout(centerText,BoxLayout.Y_AXIS));
         botGrid.setLayout(new BoxLayout(botGrid,BoxLayout.Y_AXIS));
@@ -141,6 +144,11 @@ public class GameView {
 
     public void tellContCoords(int[] coords) {
         cont.setUserGuess(coords);
+    }
+
+    public void updateSquareIcon(BoardState newState, int row, int col, boolean isUserTurn) {
+        Grid chosenGrid = (isUserTurn) ? guessGrid : userGrid;
+        chosenGrid.changeIcon(newState,row,col);
     }
 
 }
