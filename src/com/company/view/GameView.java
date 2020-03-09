@@ -40,7 +40,8 @@ public class GameView {
         menuBarSetup();
         makeUserInput();
         makeDifficultyOptions(initFrame.getContentPane());
-        initFrame.setSize(1000,1000);
+
+        initFrame.pack();
         initFrame.setVisible(true);
     }
 
@@ -60,6 +61,9 @@ public class GameView {
         button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(button);
+        button.setMinimumSize(new Dimension(200, 200));
+        button.setMaximumSize(new Dimension(200, 200));
+
         chooseDifficulty(text, button);
 
     }
