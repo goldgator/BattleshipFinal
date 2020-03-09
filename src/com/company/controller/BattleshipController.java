@@ -66,6 +66,7 @@ public class BattleshipController {
         if(placedShips == 4) {
             isPlacingShips = false;
             isUserTurn = true;
+            userUI.addNewTextMessage("All ships placed, take your first shot!");
         }
     }
 

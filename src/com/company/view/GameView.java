@@ -26,7 +26,7 @@ public class GameView {
 
     Grid userGrid;
     Grid guessGrid;
-    JTextPane textArea;
+    JLabel textArea;
 
     String name1;
     String name2;
@@ -42,6 +42,12 @@ public class GameView {
         makeDifficultyOptions(initFrame.getContentPane());
 
         initFrame.pack();
+        initFrame.setBackground(Color.black);
+        initFrame.pack();
+        initFrame.setLocationRelativeTo(null);
+
+        initFrame.setSize(1000,1000);
+
         initFrame.setVisible(true);
     }
 
@@ -51,15 +57,41 @@ public class GameView {
 
     public void makeDifficultyOptions(Container container) {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        addButton("easy", container);
-        addButton("medium", container);
-        addButton("hard", container);
+        addTitle(container);
+        addButton("Easy", container);
+        addButton("Medium", container);
+        addButton("Hard", container);
 
+    }
+
+    public void addTitle(Container container) {
+        JLabel titleArea = new JLabel("Place your ships!");
+        titleArea.setHorizontalAlignment(SwingConstants.CENTER);
+        titleArea.setVerticalAlignment(SwingConstants.CENTER);
+        titleArea.setText("BattleShip!");
+        titleArea.setFont(new Font("Monospaced", Font.PLAIN, 18));
+        titleArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        titleArea.setMaximumSize(new Dimension(400,120));
+        titleArea.setMinimumSize(new Dimension(400,120));
+        titleArea.setPreferredSize(new Dimension(400,120));
+        titleArea.setBackground(Color.BLACK);
+        titleArea.setOpaque(true);
+        titleArea.setForeground(Color.WHITE);
+
+        container.add(titleArea);
     }
 
     public void addButton(String text, Container container) {
         button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        button.setFont(new Font("Monospaced", Font.PLAIN, 20));
+
+        button.setMaximumSize(new Dimension(250, 70));
+        button.setMinimumSize(new Dimension(250, 70));
+        button.setPreferredSize(new Dimension(250, 70));
+
         container.add(button);
         button.setMinimumSize(new Dimension(200, 200));
         button.setMaximumSize(new Dimension(200, 200));
@@ -107,7 +139,7 @@ public class GameView {
 
     public void chooseDifficulty(String text, JButton button) {
         switch (text) {
-            case "easy":
+            case "Easy":
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("starting in easy");
@@ -117,7 +149,7 @@ public class GameView {
                     }
                 });
                 break;
-            case "medium":
+            case "Medium":
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("starting in medium");
@@ -127,7 +159,7 @@ public class GameView {
                     }
                 });
                 break;
-            case "hard":
+            case "Hard":
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("starting in hard");
@@ -143,18 +175,19 @@ public class GameView {
     }
 
     public void setupTextArea() {
-        textArea = new JTextPane();
+        textArea = new JLabel("Place your ships!");
+        textArea.setHorizontalAlignment(SwingConstants.CENTER);
+        textArea.setVerticalAlignment(SwingConstants.CENTER);
         textArea.setText("Place your ships!");
-        StyledDocument doc = textArea.getStyledDocument();
-        SimpleAttributeSet center = new SimpleAttributeSet();
-        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        doc.setParagraphAttributes(0, doc.getLength(), center, false);
-        textArea.setStyledDocument(doc);
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 18));
+
         textArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        textArea.setMaximumSize(new Dimension(400,60));
-        textArea.setMinimumSize(new Dimension(400,60));
-        textArea.setPreferredSize(new Dimension(400,60));
+        textArea.setMaximumSize(new Dimension(400,120));
+        textArea.setMinimumSize(new Dimension(400,120));
+        textArea.setPreferredSize(new Dimension(400,120));
+
         textArea.setBackground(Color.BLACK);
+        textArea.setOpaque(true);
         textArea.setForeground(Color.WHITE);
     }
 
