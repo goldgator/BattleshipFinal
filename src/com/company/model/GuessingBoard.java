@@ -1,7 +1,6 @@
 package com.company.model;
 
 public class GuessingBoard extends Board {
-    BoardSquare lastHitSquare;
     UserBoard opponentBoard;
 
     public GuessingBoard() {
@@ -17,7 +16,4 @@ public class GuessingBoard extends Board {
         board[row][col].setState(resultState);
         return resultState;
     }
-
-
-
 }

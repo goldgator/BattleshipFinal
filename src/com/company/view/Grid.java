@@ -1,5 +1,6 @@
 package com.company.view;
 
+import com.company.model.Board;
 import com.company.model.BoardState;
 
 import javax.swing.*;
@@ -26,7 +27,10 @@ public class Grid extends JPanel {
         setBackground(black);
         setLayout(new GridLayout(panelSide, panelSide, gap, gap));
         setBorder(BorderFactory.createEmptyBorder(gap, gap, gap, gap));
+
         setMaximumSize(new Dimension(pSize*8,pSize*8));
+        setMinimumSize(new Dimension(pSize*8, pSize*8));
+
         JPanel[][] panels = new JPanel[panelSide][panelSide];
         for (int i = 0; i < panels.length; i++) {
             for (int j = 0; j < panels[i].length; j++) {
@@ -64,6 +68,17 @@ public class Grid extends JPanel {
         return new ImageIcon(image);
     }
 
+    public void updateEntireGrid(Board clonedBoard) {
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[i].length; j++) {
+                BoardState newState = clonedBoard.getBoardSquare(i,j).getState();
+                changeIcon(newState,i,j);
+            }
+        }
+    }
+
+
+
     public void changeIcon(BoardState newState, int row, int col) {
         switch (newState) {
             case SHIP:
@@ -74,6 +89,9 @@ public class Grid extends JPanel {
                 break;
             case MISSED:
                 buttons[row][col].setIcon(resizeIcon(miss,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
+                break;
+            case EMPTY:
+                buttons[row][col].setIcon(resizeIcon(empty,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
                 break;
         }
     }

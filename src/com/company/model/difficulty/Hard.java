@@ -20,12 +20,17 @@ public class Hard implements Difficulty{
                 row = rng.nextInt(testBoard.getLength());
                 col = rng.nextInt(testBoard.getLength());
 
-                if (row % 2 == 1) {
-                    row += Math.abs(testBoard.getLength() - row);
+                if (row % 2 == 0) {
+                    if (col % 2 == 0) {
+                        col += Math.signum((testBoard.getLength()/2f) - col);
+                    }
+                } else {
+
+                    if (col % 2 == 1) {
+                        col += Math.signum((testBoard.getLength()/2f) - col);
+                    }
                 }
-                if (row % 2 == 1) {
-                    row += Math.abs(testBoard.getLength() - row);
-                }
+
             } while (testBoard.getBoardSquare(row, col).getState() != BoardState.EMPTY);
 
             return new int[]{row, col};
@@ -37,23 +42,36 @@ public class Hard implements Difficulty{
                 int[] coords = b.getCoords();
                 int newRow;
                 int newCol;
-                for (int i = 0; i < 360; i += 90) {
+                for (float i = 0; i < 2; i += .5) {
                     //Update newCoords
-                    newRow = (int) (coords[0] + Math.sin(i));
-                    newCol = (int) (coords[1] + Math.cos(i));
-                    //Leave loop if out of bounds
-                    if (coords[0] + Math.sin(i) >= testBoard.getLength() || coords[0] + Math.sin(i) < 0) break;
-                    if (coords[1] + Math.cos(i) >= testBoard.getLength() || coords[0] + Math.cos(i) < 0) break;
+                    int vDif = (int) Math.sin(i*Math.PI);
+                    int hDif = (int) Math.cos(i*Math.PI);
 
-                    BoardSquare testSquare = testBoard.getBoardSquare(newRow,newCol);
-                    if (testSquare.getState() == BoardState.EMPTY) {
-                        adjacents.add(testSquare);
+                    if ((Math.abs(vDif) + Math.abs(hDif) > 1)) {
+                        throw new IllegalStateException("i: " + i + "|vDif: " + vDif + "|hDif: " + hDif);
+                    }
+
+                    newRow = (int) (coords[0] + vDif);
+                    newCol = (int) (coords[1] + hDif);
+                    //Only grab square if new values are valid
+                    boolean validRow =  (newRow < testBoard.getLength() && newRow >= 0);
+                    boolean validCol =  (newCol < testBoard.getLength() && newCol >= 0);
+
+                    if (validCol && validRow) {
+                        BoardSquare testSquare = testBoard.getBoardSquare(newRow,newCol);
+                        if (testSquare.getState() == BoardState.EMPTY) {
+                            adjacents.add(testSquare);
+                        }
                     }
                 }
             }
 
             //Choose random adjacent
-            int rand = rng.nextInt(testBoard.getLength());
+            if (adjacents.size() == 0) {
+                throw new IllegalStateException("Row: " + row + "|Col: " + col);
+            }
+
+            int rand = rng.nextInt(adjacents.size());
             return adjacents.get(rand).getCoords();
         }
     }

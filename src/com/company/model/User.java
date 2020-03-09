@@ -1,10 +1,12 @@
 package com.company.model;
 
+import com.company.controller.BattleshipController;
+
 public class User extends Player {
 
 
-    public User(String newName) {
-        super(newName);
+    public User(String newName, BattleshipController cont) {
+        super(newName, cont);
     }
 
     public int[] chooseGridSpace() {
@@ -14,5 +16,9 @@ public class User extends Player {
 
         guessBoard.targetSquare(row,col);
         return new int[]{row, col};
+    }
+
+    public void placeShips() {
+
     }
 }

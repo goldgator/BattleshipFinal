@@ -1,12 +1,16 @@
 package com.company.view;
 
 import com.company.controller.BattleshipController;
+import com.company.model.Board;
 import com.company.model.BoardState;
 import com.company.model.difficulty.Easy;
 import com.company.model.difficulty.Hard;
 import com.company.model.difficulty.Medium;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +26,7 @@ public class GameView {
 
     Grid userGrid;
     Grid guessGrid;
-    JTextArea textArea;
+    JTextPane textArea;
 
 
     public GameView() {
@@ -111,16 +115,29 @@ public class GameView {
 
     }
 
-    public void gridSetup() {
-        guessGrid = new Grid(70,this);
-        textArea = new JTextArea("Stuff goes here");
+    public void setupTextArea() {
+        textArea = new JTextPane();
+        textArea.setText("Place your ships!");
+        StyledDocument doc = textArea.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        textArea.setStyledDocument(doc);
         textArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        textArea.setOpaque(false);
+        textArea.setMaximumSize(new Dimension(400,60));
+        textArea.setMinimumSize(new Dimension(400,60));
+        textArea.setPreferredSize(new Dimension(400,60));
+        textArea.setBackground(Color.BLACK);
+        textArea.setForeground(Color.WHITE);
+    }
+
+    public void gridSetup() {
+        setupTextArea();
+
+        guessGrid = new Grid(65,this);
         userGrid = new Grid(40,this);
-
         initFrame.dispose();
-        initFrame = new JFrame("Set Up Your Board!");
-
+        initFrame = new JFrame("BattleShip!");
         initFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel topGrid = new JPanel();
         JPanel centerText = new JPanel();
@@ -137,18 +154,35 @@ public class GameView {
         initFrame.getContentPane().add(botGrid);
         initFrame.setLayout(new BoxLayout(initFrame.getContentPane(),BoxLayout.Y_AXIS));
 
+        initFrame.getContentPane().setBackground(Color.black);
         initFrame.pack();
         initFrame.setLocationRelativeTo(null);
         initFrame.setVisible(true);
     }
 
+    public void addNewTextMessage(String message) {
+        String lastMessage = textArea.getText().split("\n")[0];
+        String concat;
+        if (lastMessage.isEmpty()) {
+            concat = "";
+        } else {
+            concat = lastMessage;
+        }
+        concat = message + "\n" + concat;
+        textArea.setText(concat);
+    }
+
     public void tellContCoords(int[] coords) {
-        cont.setUserGuess(coords);
+        cont.setUserCoords(coords);
     }
 
     public void updateSquareIcon(BoardState newState, int row, int col, boolean isUserTurn) {
         Grid chosenGrid = (isUserTurn) ? guessGrid : userGrid;
         chosenGrid.changeIcon(newState,row,col);
+    }
+
+    public void updateGuessGrid(Board clonedBoard) {
+        userGrid.updateEntireGrid(clonedBoard);
     }
 
 }
