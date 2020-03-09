@@ -17,7 +17,8 @@ public class BattleshipController {
     private int[] previousCoords;
     private boolean shipDestroyed = false;
 
-
+    public BattleshipController() {
+    }
     public void shipWasDestroyed() {
         System.out.println("Ship Destroyed!!!!!");
         String message = (isUserTurn) ? (player1.getName() + " destroyed a ship!") : (player2.getName() + " destroyed a ship!");
@@ -41,15 +42,13 @@ public class BattleshipController {
     public void setDiff(Difficulty newDiff) {
         diff = newDiff;
         System.out.println(newDiff.getClass().getSimpleName());
-        setupPlayers();
+     //   setupPlayers();
     }
 
-    public BattleshipController() {
-        userUI.attachController(this);
-    }
+
 
     public void run() {
-        //Instantiation here
+        userUI.attachController(this);
     }
 
     public void setupShips() {
@@ -70,9 +69,9 @@ public class BattleshipController {
         }
     }
 
-    public void setupPlayers() {
-        player1 = new User("Hank", this);
-        player2 = new Computer("Zorp",this, diff);
+    public void setupPlayers(String name1, String name2) {
+        player1 = new User(name1, this);
+        player2 = new Computer(name2,this, diff);
         player1.attachOpponentBoard(player2.getOwnBoard());
         player2.attachOpponentBoard(player1.getOwnBoard());
         player2.placeShips();
@@ -107,8 +106,6 @@ public class BattleshipController {
             sendUserMessage(result);
         }
         userUI.updateSquareIcon(result,opponentGuess[0],opponentGuess[1],isUserTurn);
-
-
         isUserTurn = true;
     }
 

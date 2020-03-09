@@ -46,7 +46,6 @@ public class Grid extends JPanel {
                 int jPanel = j / btnSide;
                 buttons[i][j] = new JButton(resizeIcon(empty,pSize,pSize));
                 buttons[i][j].setPreferredSize(btnPreferSize);
-
                 int finalI = i;
                 int finalJ = j;
                 buttons[i][j].addActionListener(new ActionListener() {
@@ -54,7 +53,6 @@ public class Grid extends JPanel {
                     public void actionPerformed(ActionEvent e) {
                         //Send coordinates of button to Controller
                         userUI.tellContCoords(new int[]{finalI, finalJ});
-
                     }
                 });
                 panels[iPanel][jPanel].add(buttons[i][j]);

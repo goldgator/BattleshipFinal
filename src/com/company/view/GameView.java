@@ -28,16 +28,20 @@ public class GameView {
     Grid guessGrid;
     JTextPane textArea;
 
+    String name1;
+    String name2;
+    JTextField textField1;
+    JTextField textField2;
+
 
     public GameView() {
         initFrame = new JFrame("Battleship");
         initFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         menuBarSetup();
+        makeUserInput();
         makeDifficultyOptions(initFrame.getContentPane());
-        initFrame.pack();
+        initFrame.setSize(1000,1000);
         initFrame.setVisible(true);
-//        playerBoard.setVisible(false);
-
     }
 
     public void attachController(BattleshipController newCont) {
@@ -55,9 +59,9 @@ public class GameView {
     public void addButton(String text, Container container) {
         button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //button.setBounds(100, 100, 100, 100);
         container.add(button);
         chooseDifficulty(text, button);
+
     }
 
     public void menuBarSetup() {
@@ -77,14 +81,34 @@ public class GameView {
         TopLevelMenu.add(menuItem);
     }
 
+    public void makeUserInput() {
+        JLabel setNames = new JLabel("What would you like the player names to be? (choose a difficulty to enter and start)");
+        setNames.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textField1 = new JTextField();
+        textField1.setMinimumSize(new Dimension(200,20));
+        textField1.setMaximumSize(new Dimension(200,20));
+        textField2 = new JTextField();
+        textField2.setMinimumSize(new Dimension(200,20));
+        textField2.setMaximumSize(new Dimension(200,20));
+        initFrame.getContentPane().add(setNames);
+        initFrame.getContentPane().add(textField1);
+        initFrame.getContentPane().add(textField2);
+    }
+
+    public void setPlayerNames() {
+        name1 = textField1.getText();
+        name2 = textField2.getText();
+        cont.setupPlayers(name1, name2);
+    }
+
     public void chooseDifficulty(String text, JButton button) {
         switch (text) {
             case "easy":
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        //start game in ea
                         System.out.println("starting in easy");
                         cont.setDiff(new Easy());
+                        setPlayerNames();
                         gridSetup();
                     }
                 });
@@ -92,9 +116,9 @@ public class GameView {
             case "medium":
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        //start game in medium
                         System.out.println("starting in medium");
                         cont.setDiff(new Medium());
+                        setPlayerNames();
                         gridSetup();
                     }
                 });
@@ -102,15 +126,15 @@ public class GameView {
             case "hard":
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        //start game in hard
                         System.out.println("starting in hard");
                         cont.setDiff(new Hard());
+                        setPlayerNames();
                         gridSetup();
                     }
                 });
                 break;
         }
-        initFrame.setVisible(false);
+        //initFrame.setVisible(false);
 
     }
 
