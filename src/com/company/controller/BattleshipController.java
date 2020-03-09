@@ -20,7 +20,7 @@ public class BattleshipController {
 
     public BattleshipController() {
     }
-    
+
     public void shipWasDestroyed() {
         System.out.println("Ship Destroyed!!!!!");
         String message = (isUserTurn) ? (player1.getName() + " destroyed a ship!") : (player2.getName() + " destroyed a ship!");
