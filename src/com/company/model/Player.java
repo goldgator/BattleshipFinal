@@ -9,9 +9,7 @@ public abstract class Player {
     protected UserBoard ownBoard;
     private BattleshipController cont;
     protected GuessingBoard guessBoard = new GuessingBoard();
-
     protected ArrayList<BoardSquare> activeHits = new ArrayList<>();
-    protected int[] lastCoords = null;
 
     public Player(String newName, BattleshipController newCont) {
         cont = newCont;
@@ -29,10 +27,6 @@ public abstract class Player {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void addNewActiveHit(BoardSquare hitSquare) {

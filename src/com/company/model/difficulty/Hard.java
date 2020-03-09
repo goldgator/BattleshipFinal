@@ -36,43 +36,72 @@ public class Hard implements Difficulty{
             return new int[]{row, col};
         } else {
             ArrayList<BoardSquare> adjacents = new ArrayList<>();
+            boolean directionFailed = true;
 
-            //Find all adjacents
-            for (BoardSquare b : activeHits) {
-                int[] coords = b.getCoords();
-                int newRow;
-                int newCol;
-                for (float i = 0; i < 2; i += .5) {
-                    //Update newCoords
-                    int vDif = (int) Math.sin(i*Math.PI);
-                    int hDif = (int) Math.cos(i*Math.PI);
+            //Find and use direction if can
+            if (activeHits.size() >= 2) {
+                boolean isHorizontal = (activeHits.get(0).getCoords()[0] == activeHits.get(1).getCoords()[0]);
+                if (isHorizontal) {
+                    int newCol;
 
-                    if ((Math.abs(vDif) + Math.abs(hDif) > 1)) {
-                        throw new IllegalStateException("i: " + i + "|vDif: " + vDif + "|hDif: " + hDif);
+                    for(int i = 1; i > -3; i -= 2) {
+                        for (BoardSquare b : activeHits) {
+                            newCol = b.getCoords()[1] + i;
+                            row = b.getCoords()[0];
+                            if (newCol >= testBoard.getLength() || newCol < 0) break;
+
+                            BoardSquare testSquare = testBoard.getBoardSquare(row, newCol);
+                            if (testSquare.getState() == BoardState.EMPTY) {
+                                adjacents.add(testSquare);
+                                directionFailed = false;
+                            }
+                        }
                     }
+                }
 
-                    newRow = (int) (coords[0] + vDif);
-                    newCol = (int) (coords[1] + hDif);
-                    //Only grab square if new values are valid
-                    boolean validRow =  (newRow < testBoard.getLength() && newRow >= 0);
-                    boolean validCol =  (newCol < testBoard.getLength() && newCol >= 0);
 
-                    if (validCol && validRow) {
-                        BoardSquare testSquare = testBoard.getBoardSquare(newRow,newCol);
-                        if (testSquare.getState() == BoardState.EMPTY) {
-                            adjacents.add(testSquare);
+                if (adjacents.size() == 0) {
+                    directionFailed = true;
+                }
+            }
+
+
+            if (directionFailed == true) {
+                adjacents.clear();
+                //Find all adjacents regardless of direction
+                for (BoardSquare b : activeHits) {
+                    int[] coords = b.getCoords();
+                    int newRow;
+                    int newCol;
+                    for (float i = 0; i < 2; i += .5) {
+                        //Update newCoords
+                        int vDif = (int) Math.sin(i * Math.PI);
+                        int hDif = (int) Math.cos(i * Math.PI);
+
+
+
+                        newRow = (int) (coords[0] + vDif);
+                        newCol = (int) (coords[1] + hDif);
+                        //Only grab square if new values are valid
+                        boolean validRow = (newRow < testBoard.getLength() && newRow >= 0);
+                        boolean validCol = (newCol < testBoard.getLength() && newCol >= 0);
+
+                        if (validCol && validRow) {
+                            BoardSquare testSquare = testBoard.getBoardSquare(newRow, newCol);
+                            if (testSquare.getState() == BoardState.EMPTY) {
+                                adjacents.add(testSquare);
+                            }
                         }
                     }
                 }
             }
+                //Choose random adjacent
+                if (adjacents.size() == 0) {
+                    throw new IllegalStateException("Row: " + row + "|Col: " + col);
+                }
 
-            //Choose random adjacent
-            if (adjacents.size() == 0) {
-                throw new IllegalStateException("Row: " + row + "|Col: " + col);
-            }
-
-            int rand = rng.nextInt(adjacents.size());
-            return adjacents.get(rand).getCoords();
+                int rand = rng.nextInt(adjacents.size());
+                return adjacents.get(rand).getCoords();
         }
     }
 }

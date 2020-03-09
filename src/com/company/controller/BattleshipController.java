@@ -25,8 +25,6 @@ public class BattleshipController {
         shipDestroyed = true;
     }
 
-
-
     public void setUserCoords(int[] newGuess) {
         previousCoords = userCoords;
         userCoords = newGuess;
@@ -134,9 +132,4 @@ public class BattleshipController {
             userUI.addNewTextMessage(player2.getName() + " won!!!!!");
         }
     }
-
-
-
-
-
 }

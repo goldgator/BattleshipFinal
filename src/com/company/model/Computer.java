@@ -41,8 +41,6 @@ public class Computer extends Player {
         System.out.println("Computer changed all ship tiles");
     }
 
-
-
     public int[] chooseGridSpace() {
         return diff.chooseSquare(guessBoard,activeHits);
     }

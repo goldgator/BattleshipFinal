@@ -77,8 +77,6 @@ public class Grid extends JPanel {
         }
     }
 
-
-
     public void changeIcon(BoardState newState, int row, int col) {
         switch (newState) {
             case SHIP:
@@ -97,5 +95,3 @@ public class Grid extends JPanel {
     }
 
 }
-
-

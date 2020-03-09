@@ -5,16 +5,10 @@ public abstract class Board {
 
     //Copy uses: ◯,⦻,⛝,⬜
 
-
-
     public abstract BoardState targetSquare(int row, int col);
 
     public int getLength() {
         return board.length;
-    }
-
-    public void setBoardSquare(int row, int col, BoardState newState) {
-        board[row][col].setState(newState);
     }
 
     public BoardSquare getBoardSquare(int row, int col) {
@@ -32,7 +26,6 @@ public abstract class Board {
             }
         }
     }
-
 
     @Override
     public String toString() {

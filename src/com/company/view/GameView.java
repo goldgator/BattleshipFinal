@@ -44,7 +44,6 @@ public class GameView {
         cont = newCont;
     }
 
-
     public void makeDifficultyOptions(Container container) {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         addButton("easy", container);

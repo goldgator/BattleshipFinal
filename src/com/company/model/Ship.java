@@ -21,5 +21,4 @@ public class Ship {
         return shipParts.isEmpty();
     }
 
-
 }

@@ -63,7 +63,7 @@ public class UserBoard extends Board {
                     }
                 }
                 Ship newShip = new Ship(modifiedSquares, this);
-                allShips.add(newShip);
+                addShip(newShip);
                 return newShip;
             } else {
                 throw new IllegalArgumentException("Overlapped a ship");
