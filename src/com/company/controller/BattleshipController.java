@@ -16,9 +16,11 @@ public class BattleshipController {
     private int[] userCoords;
     private int[] previousCoords;
     private boolean shipDestroyed = false;
+    private boolean gameEnd = false;
 
     public BattleshipController() {
     }
+    
     public void shipWasDestroyed() {
         System.out.println("Ship Destroyed!!!!!");
         String message = (isUserTurn) ? (player1.getName() + " destroyed a ship!") : (player2.getName() + " destroyed a ship!");
@@ -27,15 +29,17 @@ public class BattleshipController {
     }
 
     public void setUserCoords(int[] newGuess) {
-        previousCoords = userCoords;
-        userCoords = newGuess;
-        if (isUserTurn) {
-            userTurn();
-        }
-        if (previousCoords != null && isPlacingShips) {
-            setupShips();
-            userCoords = null;
-            previousCoords = null;
+        if (!gameEnd) {
+            previousCoords = userCoords;
+            userCoords = newGuess;
+            if (isUserTurn) {
+                userTurn();
+            }
+            if (previousCoords != null && isPlacingShips) {
+                setupShips();
+                userCoords = null;
+                previousCoords = null;
+            }
         }
     }
 
@@ -44,8 +48,6 @@ public class BattleshipController {
         System.out.println(newDiff.getClass().getSimpleName());
      //   setupPlayers();
     }
-
-
 
     public void run() {
         userUI.attachController(this);
@@ -71,6 +73,13 @@ public class BattleshipController {
     }
 
     public void setupPlayers(String name1, String name2) {
+        if (name1.isEmpty() || name1.equalsIgnoreCase("Player name")) {
+            name1 = "Player 1";
+        }
+        if (name2.isEmpty() || name2.equalsIgnoreCase("Computer name")) {
+            name2 = "Player 2";
+        }
+
         player1 = new User(name1, this);
         player2 = new Computer(name2,this, diff);
         player1.attachOpponentBoard(player2.getOwnBoard());
@@ -124,6 +133,7 @@ public class BattleshipController {
     }
 
     public void gameEnd() {
+        gameEnd = true;
         if (isUserTurn) {
             userUI.addNewTextMessage(player1.getName() + " won!!!!");
         } else {

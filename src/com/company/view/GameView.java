@@ -17,35 +17,36 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class GameView {
-    BattleshipController cont;
-    JFrame initFrame;
-    JMenuBar menuBar;
-    JMenu TopLevelMenu;
-    JMenuItem menuItem;
-    JButton button;
+    private BattleshipController cont;
+    private JFrame initFrame;
+    private JMenuBar menuBar;
+    private JMenu TopLevelMenu;
+    private JMenuItem menuItem;
+    private JButton button;
 
-    Grid userGrid;
-    Grid guessGrid;
-    JLabel textArea;
+    private Grid userGrid;
+    private Grid guessGrid;
+    private JTextPane textArea;
 
-    String name1;
-    String name2;
-    JTextField textField1;
-    JTextField textField2;
+    private String name1;
+    private String name2;
+    private JTextField textField1;
+    private JTextField textField2;
 
 
     public GameView() {
         initFrame = new JFrame("Battleship");
         initFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         menuBarSetup();
-        makeUserInput();
+
         makeDifficultyOptions(initFrame.getContentPane());
 
-        initFrame.setBackground(Color.black);
+        initFrame.setLayout(new BoxLayout(initFrame.getContentPane(),BoxLayout.Y_AXIS));
+        initFrame.getContentPane().setBackground(Color.black);
         initFrame.pack();
         initFrame.setLocationRelativeTo(null);
 
-        initFrame.setSize(1000,1000);
+//        initFrame.setSize(1000,1000);
 
         initFrame.setVisible(true);
     }
@@ -57,6 +58,7 @@ public class GameView {
     public void makeDifficultyOptions(Container container) {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         addTitle(container);
+        makeUserInput();
         addButton("Easy", container);
         addButton("Medium", container);
         addButton("Hard", container);
@@ -64,26 +66,35 @@ public class GameView {
     }
 
     public void addTitle(Container container) {
-        JLabel titleArea = new JLabel("Place your ships!");
-        titleArea.setHorizontalAlignment(SwingConstants.CENTER);
-        titleArea.setVerticalAlignment(SwingConstants.CENTER);
-        titleArea.setText("BattleShip!");
-        titleArea.setFont(new Font("Monospaced", Font.PLAIN, 18));
-        titleArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        titleArea.setMaximumSize(new Dimension(400,120));
-        titleArea.setMinimumSize(new Dimension(400,120));
-        titleArea.setPreferredSize(new Dimension(400,120));
+        JTextPane titleArea = new JTextPane();
+        titleArea.setText("Battleship");
+        StyledDocument doc = titleArea.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        titleArea.setStyledDocument(doc);
+
+        titleArea.setFont(new Font("Stencil", Font.BOLD, 56));
+
+
+        titleArea.setMaximumSize(new Dimension(400,60));
+        titleArea.setMinimumSize(new Dimension(400,60));
+        titleArea.setPreferredSize(new Dimension(400,60));
+
         titleArea.setBackground(Color.BLACK);
         titleArea.setOpaque(true);
-        titleArea.setForeground(Color.WHITE);
+        titleArea.setForeground(new Color(0,102,153));
 
-        container.add(titleArea);
+        JPanel box = new JPanel();
+        box.add(titleArea);
+        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+        addEmptySpace(30);
+        container.add(box);
     }
 
     public void addButton(String text, Container container) {
         button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
         button.setFont(new Font("Monospaced", Font.PLAIN, 20));
 
@@ -92,6 +103,7 @@ public class GameView {
         button.setPreferredSize(new Dimension(250, 70));
 
         container.add(button);
+        addEmptySpace(15);
         chooseDifficulty(text, button);
 
     }
@@ -113,18 +125,38 @@ public class GameView {
         TopLevelMenu.add(menuItem);
     }
 
+    public void addEmptySpace(int space) {
+        JPanel empty = new JPanel();
+        empty.setOpaque(false);
+        empty.setMaximumSize(new Dimension(200, space));
+        empty.setMinimumSize(new Dimension(200, space));
+        empty.setPreferredSize(new Dimension(200, space));
+        initFrame.getContentPane().add(empty);
+
+    }
+
     public void makeUserInput() {
-        JLabel setNames = new JLabel("What would you like the player names to be? (choose a difficulty to enter and start)");
+        JLabel setNames = new JLabel("Name yourself and the computer then choose a difficulty!");
         setNames.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setNames.setForeground(Color.WHITE);
+        setNames.setBorder(BorderFactory.createEmptyBorder(0,30,0,30));
         textField1 = new JTextField();
         textField1.setMinimumSize(new Dimension(200,20));
         textField1.setMaximumSize(new Dimension(200,20));
+        textField1.setText("Player name");
+
         textField2 = new JTextField();
         textField2.setMinimumSize(new Dimension(200,20));
         textField2.setMaximumSize(new Dimension(200,20));
+        textField2.setText("Computer name");
+
+        addEmptySpace(20);
         initFrame.getContentPane().add(setNames);
+        addEmptySpace(10);
         initFrame.getContentPane().add(textField1);
+        addEmptySpace(10);
         initFrame.getContentPane().add(textField2);
+        addEmptySpace(60);
     }
 
     public void setPlayerNames() {
@@ -171,10 +203,13 @@ public class GameView {
     }
 
     public void setupTextArea() {
-        textArea = new JLabel("Place your ships!");
-        textArea.setHorizontalAlignment(SwingConstants.CENTER);
-        textArea.setVerticalAlignment(SwingConstants.CENTER);
+        textArea = new JTextPane();
         textArea.setText("Place your ships!");
+        StyledDocument doc = textArea.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        textArea.setStyledDocument(doc);
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 18));
 
         textArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
