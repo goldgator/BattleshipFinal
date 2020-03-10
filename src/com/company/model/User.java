@@ -3,8 +3,6 @@ package com.company.model;
 import com.company.controller.BattleshipController;
 
 public class User extends Player {
-
-
     public User(String newName, BattleshipController cont) {
         super(newName, cont);
     }

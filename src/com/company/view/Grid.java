@@ -12,10 +12,10 @@ public class Grid extends JPanel {
     private int btnSide = 4;
     private int panelSide = 2;
     private int gap = 4;
-    private final ImageIcon empty = new ImageIcon("src/com/company/icons/water.png");
-    private final ImageIcon ship = new ImageIcon("src/com/company/icons/ship.png");
-    private final ImageIcon hit = new ImageIcon("src/com/company/icons/shiphurt.png");
-    private final ImageIcon miss = new ImageIcon("src/com/company/icons/miss.png");
+    private final ImageIcon EMPTY = new ImageIcon("src/com/company/icons/water.png");
+    private final ImageIcon SHIP = new ImageIcon("src/com/company/icons/ship.png");
+    private final ImageIcon HIT = new ImageIcon("src/com/company/icons/shiphurt.png");
+    private final ImageIcon MISS = new ImageIcon("src/com/company/icons/miss.png");
     private GameView userUI;
     private Color black = Color.BLACK;
     private Dimension btnPreferSize;
@@ -44,7 +44,7 @@ public class Grid extends JPanel {
             int iPanel = i / btnSide;
             for (int j = 0; j< buttons[i].length; j++) {
                 int jPanel = j / btnSide;
-                buttons[i][j] = new JButton(resizeIcon(empty,pSize,pSize));
+                buttons[i][j] = new JButton(resizeIcon(EMPTY,pSize,pSize));
                 buttons[i][j].setPreferredSize(btnPreferSize);
                 int finalI = i;
                 int finalJ = j;
@@ -78,16 +78,16 @@ public class Grid extends JPanel {
     public void changeIcon(BoardState newState, int row, int col) {
         switch (newState) {
             case SHIP:
-                buttons[row][col].setIcon(resizeIcon(ship,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
+                buttons[row][col].setIcon(resizeIcon(SHIP,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
                 break;
             case HIT:
-                buttons[row][col].setIcon(resizeIcon(hit,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
+                buttons[row][col].setIcon(resizeIcon(HIT,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
                 break;
             case MISSED:
-                buttons[row][col].setIcon(resizeIcon(miss,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
+                buttons[row][col].setIcon(resizeIcon(MISS,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
                 break;
             case EMPTY:
-                buttons[row][col].setIcon(resizeIcon(empty,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
+                buttons[row][col].setIcon(resizeIcon(EMPTY,buttons[row][col].getWidth(),buttons[row][col].getHeight()));
                 break;
         }
     }
