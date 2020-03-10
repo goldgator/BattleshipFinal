@@ -20,7 +20,7 @@ public class BattleshipController {
 
     public BattleshipController() {
     }
-    
+
     public void shipWasDestroyed() {
         System.out.println("Ship Destroyed!!!!!");
         String message = (isUserTurn) ? (player1.getName() + " destroyed a ship!") : (player2.getName() + " destroyed a ship!");
@@ -41,6 +41,10 @@ public class BattleshipController {
                 previousCoords = null;
             }
         }
+    }
+
+    public void setGameEnd(boolean newEnd) {
+        gameEnd = newEnd;
     }
 
     public void setDiff(Difficulty newDiff) {
@@ -106,22 +110,24 @@ public class BattleshipController {
     }
 
     private void opponentTurn() {
-        int[] opponentGuess = player2.chooseGridSpace();
-        System.out.println(opponentGuess[0] + ", " + opponentGuess[1]);
-        BoardState result = player2.guessShotBoard(opponentGuess);
-        if (shipDestroyed) {
-            player2.clearHits();
-            shipDestroyed = false;
-        } else {
-            sendUserMessage(result);
+        if(!gameEnd) {
+            int[] opponentGuess = player2.chooseGridSpace();
+            System.out.println(opponentGuess[0] + ", " + opponentGuess[1]);
+            BoardState result = player2.guessShotBoard(opponentGuess);
+            if (shipDestroyed) {
+                player2.clearHits();
+                shipDestroyed = false;
+            } else {
+                sendUserMessage(result);
+            }
+            userUI.updateSquareIcon(result, opponentGuess[0], opponentGuess[1], isUserTurn);
+            isUserTurn = true;
         }
-        userUI.updateSquareIcon(result,opponentGuess[0],opponentGuess[1],isUserTurn);
-        isUserTurn = true;
+
     }
 
     private void sendUserMessage(BoardState result) {
         String name = (isUserTurn) ? player1.getName() : player2.getName();
-
         switch (result) {
             case MISSED:
                 userUI.addNewTextMessage(name + " missed.");
