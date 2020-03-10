@@ -204,7 +204,7 @@ public class GameView {
 
     public void setupTextArea() {
         textArea = new JTextPane();
-        textArea.setText("Place your ships!");
+        textArea.setText("Place your ships!\n(4,3,3,2)");
         StyledDocument doc = textArea.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);

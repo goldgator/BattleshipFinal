@@ -103,6 +103,7 @@ public class UserBoard extends Board {
     }
 
     private void allShipsDestroyed() {
+        cont.setGameEnd(true);
         cont.gameEnd();
     }
 

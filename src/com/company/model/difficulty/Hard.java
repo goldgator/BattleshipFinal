@@ -25,7 +25,6 @@ public class Hard implements Difficulty{
                         col += Math.signum((testBoard.getLength()/2f) - col);
                     }
                 } else {
-
                     if (col % 2 == 1) {
                         col += Math.signum((testBoard.getLength()/2f) - col);
                     }
